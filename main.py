@@ -1,10 +1,4 @@
 from fastapi import FastAPI
-from fastapi import APIRouter
-from database.Models import *
-from database.Connect import conn
-from bson.objectid import ObjectId
-from features import *
-from features.DateTime import  getUpdateTime, now
 
 app = FastAPI()
 
