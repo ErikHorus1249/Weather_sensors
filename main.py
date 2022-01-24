@@ -3,7 +3,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 import aiofiles
 from fastapi.middleware.cors import CORSMiddleware
-from routes.Sensor import sensor
+# from routes.Sensor import sensor
 
 # init app with fast api  
 app = FastAPI()
@@ -21,4 +21,9 @@ app.add_middleware(
 )
 
 # route API 
-app.include_router(sensor)
+# app.include_router(sensor)
+
+
+@app.get("/")
+def hello():
+    return {"message":"test"}
