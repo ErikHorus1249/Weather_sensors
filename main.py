@@ -1,4 +1,10 @@
 from fastapi import FastAPI
+from fastapi import APIRouter
+from database.Models import *
+from database.Connect import conn
+from bson.objectid import ObjectId
+from features import *
+from features.DateTime import  getUpdateTime, now
 
 app = FastAPI()
 
@@ -10,16 +16,16 @@ def get_root():
 # route API 
 # app.include_router(sensor)
 
-# @app.post("/Sensors", response_description="Add new sensor data", response_model=SensorSavingModel)
-# async def create_data(senData: SensorEntryModel):
+@app.post("/Sensors", response_description="Add new sensor data", response_model=SensorSavingModel)
+async def create_data(senData: SensorEntryModel):
     
-#     doc = dict((k, v) for k, v in senData.dict().items() if v is not None)
-#     doc['updatedAt'] = getUpdateTime()
-#     doc['timestamp'] = now()
+    doc = dict((k, v) for k, v in senData.dict().items() if v is not None)
+    doc['updatedAt'] = getUpdateTime()
+    doc['timestamp'] = now()
     
-#     # fdoc = SensorSavingModel.parse_obj()
+    # fdoc = SensorSavingModel.parse_obj()
         
-#     if res := conn.Sensor.insert_one(doc):
-#         return SensorSavingModel.parse_obj(conn.Sensor.find_one({'_id':ObjectId(res.inserted_id)})) 
-#     else:
-#         return False
+    if res := conn.Sensor.insert_one(doc):
+        return SensorSavingModel.parse_obj(conn.Sensor.find_one({'_id':ObjectId(res.inserted_id)})) 
+    else:
+        return False
